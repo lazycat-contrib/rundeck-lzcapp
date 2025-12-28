@@ -1,0 +1,55 @@
+name: Rundeck
+package: cloud.lazycat.app.rundeck
+version: 5.18.0
+min_os_version: 1.3.8
+description: "Open-source automation and runbook platform for operations and DevOps"
+license: Apache-2.0
+homepage: https://www.rundeck.com
+author: Rundeck Inc.
+
+application:
+  subdomain: rundeck
+  upstreams:
+    - location: /
+      backend: http://rundeck:4440/
+  public_path:
+    - /
+
+services:
+  rundeck:
+    # rundeck/rundeck:5.18.0
+    image: registry.lazycat.cloud/czyt/rundeck/rundeck:b9a1928b2ce2d0d9
+    environment:
+      - RUNDECK_GRAILS_URL=https://{{.S.AppDomain}}
+      - RUNDECK_SERVER_FORWARDED=true
+      - RUNDECK_SERVER_CONTEXTPATH=/
+      - RUNDECK_SERVER_ADDRESS=0.0.0.0
+      - TZ=Asia/Shanghai
+      - RUNDECK_SECURITY_HTTPHEADERS_ENABLED=true
+      - RUNDECK_SECURITY_HTTPHEADERS_PROVIDER_CSP_ENABLED=false
+    binds:
+      - /lzcapp/var/rundeck/data:/home/rundeck/server/data
+      - /lzcapp/var/rundeck/plugins:/home/rundeck/libext
+      - /lzcapp/var/rundeck/logs:/home/rundeck/server/logs
+
+    setup_script: |
+      chown -R rundeck:root /lzcapp/var/rundeck
+    cpu_shares: 1024
+    mem_limit: 2048M
+    shm_size: 256m
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl -f http://localhost:4440/ || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+
+locales:
+  en:
+    name: "Rundeck"
+    description: "Open-source automation and runbook platform for operations and DevOps. Rundeck enables self-service operations with powerful job scheduling, workflow orchestration, and fine-grained access control. Default login: admin/admin"
+  zh:
+    name: "Rundeck"
+    description: "开源自动化运维平台，专为解决IT运维自动化而设计。支持作业调度、工作流编排、权限控制、日志审计等功能，帮助团队实现标准化、自动化运维，提升效率和系统稳定性。使用内置H2数据库，开箱即用。默认登录: admin/admin"
