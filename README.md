@@ -138,3 +138,7 @@ lzc-cli appstore publish rundeck-5.18.0.lpk
 ---
 
 如有问题或建议，欢迎反馈！
+
+## 自动发布
+
+每天定时检查 `rundeck/rundeck` 稳定版本，并支持 `v*` tag 触发懒猫官方商店和喵喵私有商店发布。
