@@ -14,11 +14,11 @@ application:
           params:
             user: admin
             password: admin
-
 services:
   rundeck:
     # rundeck/rundeck:5.18.0
-    image: registry.lazycat.cloud/czyt/rundeck/rundeck:b9a1928b2ce2d0d9
+    # upstream: rundeck/rundeck:7.0.1
+    image: registry.lazycat.cloud/czyt/rundeck/rundeck:a19590df49c10d4f
     environment:
       - RUNDECK_GRAILS_URL=https://{{.S.AppDomain}}
       - RUNDECK_SERVER_FORWARDED=true
@@ -31,7 +31,6 @@ services:
       - /lzcapp/var/rundeck/data:/home/rundeck/server/data
       - /lzcapp/var/rundeck/plugins:/home/rundeck/libext
       - /lzcapp/var/rundeck/logs:/home/rundeck/server/logs
-
     setup_script: |
       chown -R rundeck:root /lzcapp/var/rundeck
     cpu_shares: 1024

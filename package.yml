@@ -1,12 +1,11 @@
 package: cloud.lazycat.app.rundeck
-version: 5.18.0
+version: 7.0.1
 name: Rundeck
 description: "Open-source automation and runbook platform for operations and DevOps"
 min_os_version: 1.5.0
 license: Apache-2.0
 homepage: https://www.rundeck.com
 author: Rundeck Inc.
-
 locales:
   en:
     name: "Rundeck"
@@ -14,4 +13,3 @@ locales:
   zh:
     name: "Rundeck"
     description: "开源自动化运维平台，支持作业调度、工作流编排、权限控制和日志审计。默认登录：admin/admin"
-
